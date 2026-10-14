@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Vianshield</string>
+    <string name="title_vianshield">Vianshield</string>
+    <string name="firewall_engine_status">Firewall engine not integrated yet</string>
+</resources>
