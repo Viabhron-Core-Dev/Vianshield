@@ -1,4 +1,4 @@
-package com.example.ui.theme
+package app.vian.vianshield.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

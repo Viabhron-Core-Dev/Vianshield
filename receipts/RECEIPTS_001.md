@@ -28,3 +28,45 @@
 - **How It Was Verified**: Local build only (`compile_applet` succeeded; Gradle `:app:testDebugUnitTest` executed 30 tasks with 0 failures, `BUILD SUCCESSFUL in 21s`). GitHub Actions workflow file validated structurally; on-device verification and remote runner execution pending user repository push / dispatch.
 - **Deviations**: None. Adhered strictly to step scope; stopped before engine integration.
 - **Known Issues / Follow-up**: Phase 2 network engine evaluation required before adding VPN or filtering logic.
+
+## Entry 002
+- **Timestamp**: 2026-10-14T14:15:00-07:00
+- **Summary**: Phase 1 cleanup: migrated namespace and Kotlin packages to app.vian.vianshield, removed Google Secrets plugin and config.
+- **Exact Files Touched**:
+  - `build.gradle.kts`
+  - `app/build.gradle.kts`
+  - `gradle/libs.versions.toml`
+  - `.env.example` (deleted)
+  - `app/src/main/java/app/vian/vianshield/MainActivity.kt` (created / updated)
+  - `app/src/main/java/app/vian/vianshield/ui/theme/Color.kt` (created / updated)
+  - `app/src/main/java/app/vian/vianshield/ui/theme/Theme.kt` (created / updated)
+  - `app/src/main/java/app/vian/vianshield/ui/theme/Type.kt` (created / updated)
+  - `app/src/test/java/app/vian/vianshield/ExampleRobolectricTest.kt` (created / updated)
+  - `app/src/test/java/app/vian/vianshield/ExampleUnitTest.kt` (created / updated)
+  - `app/src/androidTest/java/app/vian/vianshield/ExampleInstrumentedTest.kt` (created / updated)
+  - Deleted obsolete files under old `com/example` packages and pruned empty directories.
+  - `BLUEPRINT.md`
+  - `receipts/RECEIPTS_001.md`
+- **What Was Done**:
+  - Updated Android `namespace` in `app/build.gradle.kts` from `com.example` to `app.vian.vianshield`.
+  - Moved all Kotlin sources, Compose theme files, unit tests, and instrumented tests from `com.example` to `app.vian.vianshield`. Updated package declarations and imports consistently. Renamed theme Composable to `VianshieldTheme`.
+  - Removed Google Secrets Gradle Plugin from root `build.gradle.kts`, `app/build.gradle.kts`, and `gradle/libs.versions.toml`. Removed the `secrets { ... }` block and deleted `.env.example`.
+  - Preserved existing UI ("Firewall engine not integrated yet"), zero mock switches, zero fake telemetry.
+  - Preserved `.github/workflows/android-build.yml` and debug APK artifact pipeline.
+  - Set execution permissions on `gradlew` for CI runner consistency.
+- **How It Was Verified**: Local build only. Verified via `compile_applet` (succeeded), Gradle `:app:testDebugUnitTest` (30 tasks executed, 0 errors, `BUILD SUCCESSFUL in 26s`), and `./gradlew :app:assembleDebug` (37 tasks executed, 0 errors, `BUILD SUCCESSFUL in 3s`).
+- **Deviations**: None. Kept scope strictly to Phase 1 cleanup without introducing networking or firewall engine logic.
+- **Known Issues / Follow-up**: Ready for Phase 2 network engine architectural discussion upon user approval.
+
+## Entry 003
+- **Timestamp**: 2026-10-15T11:02:00-07:00
+- **Summary**: Workspace verification of Phase 1 cleanup files and GitHub sync capability check.
+- **Exact Files Touched**:
+  - `receipts/RECEIPTS_001.md`
+- **What Was Done**:
+  - Audited local workspace files: verified that `app/build.gradle.kts` has `namespace = "app.vian.vianshield"`, `gradle/libs.versions.toml` has no Google Secrets entries, `MainActivity.kt` and all theme/test files are properly located in `app.vian.vianshield`, and obsolete `com/example` files remain deleted.
+  - Checked Git status and remotes via `run_command`: confirmed the workspace container does not have a `.git` folder (`fatal: not a git repository`).
+  - Identified that GitHub repository pushes in Google AI Studio are driven exclusively through the user UI settings menu ("Export / Push to GitHub"), and cannot be triggered programmatically via backend shell commands without credentials.
+- **How It Was Verified**: Local workspace audit and command exit code 128 (`fatal: not a git repository`).
+- **Deviations**: Did not push to GitHub (direct CLI git push unavailable in environment; stopped to instruct user as directed).
+- **Known Issues / Follow-up**: User must use AI Studio UI to push/export to GitHub.

@@ -8,10 +8,10 @@ Vianshield is a lean, native Android security utility designed to run efficientl
 - **UI Framework**: Jetpack Compose (BOM 2024.09.00, Material 3)
 - **Build System**: Android Gradle Plugin 9.1.1, Gradle 9.3.1 Wrapper
 - **Application ID**: `app.vian.vianshield`
-- **Namespace**: `com.example`
+- **Namespace**: `app.vian.vianshield`
 - **Target SDK**: 36 | **Min SDK**: 24 | **Java Version**: 21 (Temurin)
 - **CI/CD Automation**: GitHub Actions (`.github/workflows/android-build.yml`)
-- **Dependencies**: Minimal footprint (Jetpack Compose core/material3/lifecycle/activity only; Room, Moshi, Retrofit, Firebase, and telemetry completely excluded).
+- **Dependencies**: Minimal footprint (Jetpack Compose core/material3/lifecycle/activity only; Room, Moshi, Retrofit, Firebase, Google Secrets, and telemetry completely excluded).
 
 ## 3. Development Phases
 - **Phase 1: Native Shell & CI Pipeline (CURRENT)**
@@ -19,6 +19,8 @@ Vianshield is a lean, native Android security utility designed to run efficientl
   - Setup GitHub Actions automated debug APK workflow on `push` and `workflow_dispatch`.
   - Create minimal Jetpack Compose Home Screen with honest status disclosure ("Firewall engine not integrated yet").
   - Custom vector adaptive shield launcher icon.
+  - Clean namespace and packages to `app.vian.vianshield`.
+  - Remove unused Google Secrets plugin and configuration.
   - Verification with local compilation and unit tests.
 - **Phase 2: Engine Evaluation & Architecture Alignment (PENDING REVIEW)**
   - Architectural review of networking/packet-inspection options (e.g., VpnService vs Local Loopback proxy vs Tun2Socks).
@@ -41,3 +43,8 @@ Vianshield is a lean, native Android security utility designed to run efficientl
   - Implemented `VianshieldHomeScreen` in `MainActivity.kt` with honest, clean status display.
   - Added custom adaptive shield vector icon in `ic_launcher_foreground.xml` and `ic_launcher_background.xml`.
   - Added `README.md` and `BLUEPRINT.md`.
+- **2026-10-14 (Phase 1 Cleanup)**:
+  - Changed Android namespace and package structure from `com.example` to `app.vian.vianshield`.
+  - Migrated Kotlin source files, themes (`VianshieldTheme`), unit tests, and instrumented tests to `app.vian.vianshield`.
+  - Removed Google Secrets Gradle Plugin from `build.gradle.kts`, `app/build.gradle.kts`, and `gradle/libs.versions.toml`. Removed `.env.example`.
+  - Verified local build and unit tests pass.
