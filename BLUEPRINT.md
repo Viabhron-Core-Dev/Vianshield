@@ -48,3 +48,8 @@ Vianshield is a lean, native Android security utility designed to run efficientl
   - Migrated Kotlin source files, themes (`VianshieldTheme`), unit tests, and instrumented tests to `app.vian.vianshield`.
   - Removed Google Secrets Gradle Plugin from `build.gradle.kts`, `app/build.gradle.kts`, and `gradle/libs.versions.toml`. Removed `.env.example`.
   - Verified local build and unit tests pass.
+- **2026-10-15 (Phase 2 Firestack Dependency Evaluation)**:
+  - Added pinned dependency `com.celzero:firestack:8134609734` from Maven Central.
+  - Verified all 4 Android ABIs (arm64-v8a, armeabi-v7a, x86, x86_64) packaged inside the AAR.
+  - Authored `ENGINE_DECISION.md` documenting MPL-2.0 licence, versioning, and ABI coverage.
+  - Kept shell UI, application ID, namespace, and workflow intact without initiating VPN services or network modifications.

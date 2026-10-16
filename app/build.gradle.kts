@@ -69,8 +69,13 @@ android {
   }
 }
 
-// Minimal dependencies for initial Vianshield shell - no Firebase, networking, or database
+// Minimal dependencies for initial Vianshield shell with Firestack engine candidate
 dependencies {
+  implementation(libs.firestack) {
+    artifact {
+      type = "aar"
+    }
+  }
   implementation(platform(libs.androidx.compose.bom))
   implementation(libs.androidx.activity.compose)
   implementation(libs.androidx.compose.material.icons.core)

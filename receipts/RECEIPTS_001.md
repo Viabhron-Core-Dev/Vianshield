@@ -70,3 +70,23 @@
 - **How It Was Verified**: Local workspace audit and command exit code 128 (`fatal: not a git repository`).
 - **Deviations**: Did not push to GitHub (direct CLI git push unavailable in environment; stopped to instruct user as directed).
 - **Known Issues / Follow-up**: User must use AI Studio UI to push/export to GitHub.
+
+## Entry 004
+- **Timestamp**: 2026-10-16T00:00:00-07:00
+- **Summary**: Phase 2 Step 1: Integrated Firestack pinned dependency from Maven Central, analyzed native ABIs, and measured APK impact.
+- **Exact Files Touched**:
+  - `gradle/libs.versions.toml`
+  - `app/build.gradle.kts`
+  - `ENGINE_DECISION.md`
+  - `BLUEPRINT.md`
+  - `receipts/RECEIPTS_001.md`
+- **What Was Done**:
+  - Integrated official `com.celzero:firestack:8134609734` dependency from Maven Central.
+  - Resolved POM packaging quirk where Maven POM declares `<packaging>jar</packaging>` but distributes `.aar`; configured `artifact { type = "aar" }` in `app/build.gradle.kts`.
+  - Verified native ABI coverage inside the AAR: confirmed `arm64-v8a`, `armeabi-v7a`, `x86`, and `x86_64` (all include `libgojni.so`).
+  - Authored `ENGINE_DECISION.md` documenting MPL-2.0 licence, ABI breakdown, packaging resolution, and memory/RAM considerations.
+  - Updated `BLUEPRINT.md` running ledger.
+  - Maintained Phase 1 shell UI, package namespace (`app.vian.vianshield`), application ID, and GitHub Actions workflow without adding VPN services or fake controls.
+- **How It Was Verified**: Local build only. Verified via `compile_applet` (succeeded), `./gradlew :app:testDebugUnitTest` (30 tasks executed, 0 errors, `BUILD SUCCESSFUL in 25s`), and `./gradlew :app:assembleDebug` (37 tasks executed, 0 errors, `BUILD SUCCESSFUL in 2s`). Resulting debug APK measured at 87 MB (contains all 4 uncompressed ABIs).
+- **Deviations**: None.
+- **Known Issues / Follow-up**: Push to GitHub requires AI Studio UI export. Awaiting user review before VPN service architecture discussion.
