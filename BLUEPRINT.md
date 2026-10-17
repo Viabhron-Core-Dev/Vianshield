@@ -53,3 +53,6 @@ Vianshield is a lean, native Android security utility designed to run efficientl
   - Verified all 4 Android ABIs (arm64-v8a, armeabi-v7a, x86, x86_64) packaged inside the AAR.
   - Authored `ENGINE_DECISION.md` documenting MPL-2.0 licence, versioning, and ABI coverage.
   - Kept shell UI, application ID, namespace, and workflow intact without initiating VPN services or network modifications.
+- **2026-10-17 (Phase 2 ARM Architecture Filtering)**:
+  - Applied `ndk.abiFilters += listOf("arm64-v8a", "armeabi-v7a")` in `defaultConfig` in `app/build.gradle.kts`.
+  - Excluded unused x86 and x86_64 binaries, shrinking APK size from 90.7 MB to 52.7 MB while preserving full compatibility with all physical ARM Android devices in a single APK.

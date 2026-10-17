@@ -90,3 +90,19 @@
 - **How It Was Verified**: Local build only. Verified via `compile_applet` (succeeded), `./gradlew :app:testDebugUnitTest` (30 tasks executed, 0 errors, `BUILD SUCCESSFUL in 25s`), and `./gradlew :app:assembleDebug` (37 tasks executed, 0 errors, `BUILD SUCCESSFUL in 2s`). Resulting debug APK measured at 87 MB (contains all 4 uncompressed ABIs).
 - **Deviations**: None.
 - **Known Issues / Follow-up**: Push to GitHub requires AI Studio UI export. Awaiting user review before VPN service architecture discussion.
+
+## Entry 005
+- **Timestamp**: 2026-10-17T03:03:00-07:00
+- **Summary**: Applied ARM CPU architecture filters (arm64-v8a and armeabi-v7a) to app/build.gradle.kts, excluding x86 and x86_64.
+- **Exact Files Touched**:
+  - `app/build.gradle.kts`
+  - `BLUEPRINT.md`
+  - `receipts/RECEIPTS_001.md`
+- **What Was Done**:
+  - Configured `ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }` inside `android.defaultConfig` in `app/build.gradle.kts`.
+  - Excluded unused `x86` and `x86_64` native binaries while preserving both ARM architectures in a single APK.
+  - Maintained Firestack dependency, application ID (`app.vian.vianshield`), UI, SDK versions, dependencies, and GitHub Actions workflow.
+  - Updated `BLUEPRINT.md` running ledger.
+- **How It Was Verified**: Local build only. Verified via `compile_applet` (succeeded), `./gradlew :app:testDebugUnitTest` (30 tasks executed, 0 errors, `BUILD SUCCESSFUL in 30s`), and `./gradlew :app:assembleDebug` (37 tasks executed, 0 errors, `BUILD SUCCESSFUL in 5s`). Verified APK archive: contains only `lib/arm64-v8a/` and `lib/armeabi-v7a/`. APK size reduced from 90.7 MB (86.5 MiB) to 52.7 MB (50.3 MiB).
+- **Deviations**: None.
+- **Known Issues / Follow-up**: Changes are in local AI Studio workspace; user will push to GitHub via AI Studio settings to trigger GitHub Actions build.
